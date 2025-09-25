@@ -119,7 +119,7 @@ Video guide provided below:
 https://github.com/Kylsha/easyPlugin/assets/25682040/fc04cf6a-39c8-418e-8e39-8fef1cd613de
 
 
-## Scripter tool
+## Kolba
 ![Table loook](https://pereverzev.info/easyPlugin/img/img_es.png)
 
 This tool is made for testing Python script files. User should specify a direct path to directory with Python files. Then window will show a list of Python files while you user is able to edit them in some external code editor. So when user double-click a script in Scripter, the most up-to-date version of selected script will be launched. It also helps in a team work, when you have a shared folder between users, they don't need to constantly update script/plugin, they will have the latest version of tool made by someone.
