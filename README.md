@@ -179,5 +179,5 @@ Due to imports of all needed modules (like PyQt widgets and other) scripts can b
 
 Video guide provided below:
 
-https://github.com/Kylsha/easyPlugin/assets/25682040/67390440-8ca9-4c46-9284-0677c74a3be9
+https://github.com/pavelpereverzev/easyPlugin/assets/25682040/67390440-8ca9-4c46-9284-0677c74a3be9
 
