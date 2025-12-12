@@ -1,4 +1,4 @@
-[![en](https://img.shields.io/badge/lang-en-blue.svg)](https://github.com/Kylsha/easyPlugin/blob/main/README.md) 
+[![en](https://img.shields.io/badge/lang-en-blue.svg)](https://github.com/pavelpereverzev/easyPlugin/blob/main/README.md) 
 # easyPlugin
 Инструмент для создания плагинов в QGIS.
 
@@ -122,8 +122,8 @@ https://github.com/pavelpereverzev/easyPlugin/assets/25682040/fc04cf6a-39c8-418e
 ![Table loook](https://pereverzev.info/easyPlugin/img/img_es.png)
 
 # upd. Данный инструмент в последующих обновлениях будет удален из easyPlugin. За время работы было решено сделать его отдельным плагином под названием Kolba. Плагин уже доступен для загрузки в QGIS через официальный репозиторий. 
-# * Ссылка на плагин: https://plugins.qgis.org/plugins/kolba/
-# * Ссылка на более актуальную документацию: https://github.com/pavelpereverzev/kolba/blob/main/README.ru.md
+* ### Ссылка на плагин: https://plugins.qgis.org/plugins/kolba/
+* ### Ссылка на более актуальную документацию: https://github.com/pavelpereverzev/kolba/blob/main/README.ru.md
 
 
 Инструмент предназначен для тестирования Python-скриптов. В окне виджета инструмента необходимо указать путь к расположению файлов Python-скриптов. После определения пути в окне появятся все скрипты. Пользователь может их редактировать в любом другом редакторе, в то время как Kolba сможет запускать их актуальные версии. Грубо говоря, скрипты в этом окне — это ссылки на файлы. Это может быть полезным в совместной работе при наличии папки с общим доступом. Например, пользователи тестируют скрипт, находят в нем баги, сообщают об этом разработчику. Последний делает исправления и сообщает тестировщикам о том, что ошибки исправлены, после чего все могут запускать актуальную версию скрипта без каких-либо обновлений. 
