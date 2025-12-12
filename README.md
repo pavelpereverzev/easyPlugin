@@ -3,7 +3,7 @@
 QGIS plugin that allows to create plugins.
 
 The main goal of this plugin is to make a fast and easy plugin template. With all respect to [Plugin Builder](https://github.com/g-sherman/Qgis-Plugin-Builder) module, easyPlugin is turnkey solution and makes a plugin ready for installation, testing and editing.
-Plugin contains two tools: easyPlugin itself and Scripter - a tool for testing raw Python plugin code and other scripts. 
+Plugin contains two tools: easyPlugin itself and Kolba - a tool for testing raw Python plugin code and other scripts. 
 
 ## easyPlugin tool
 ![Table loook](https://pereverzev.info/easyPlugin/img/img_ep.png)
@@ -116,18 +116,23 @@ The last widget type is a **Custom** and like mentioned above it just runs a Pyt
 
 Video guide provided below:
 
-https://github.com/Kylsha/easyPlugin/assets/25682040/fc04cf6a-39c8-418e-8e39-8fef1cd613de
+https://github.com/pavelpereverzev/easyPlugin/assets/25682040/fc04cf6a-39c8-418e-8e39-8fef1cd613de
 
 
 ## Kolba
 ![Table loook](https://pereverzev.info/easyPlugin/img/img_es.png)
 
-This tool is made for testing Python script files. User should specify a direct path to directory with Python files. Then window will show a list of Python files while you user is able to edit them in some external code editor. So when user double-click a script in Scripter, the most up-to-date version of selected script will be launched. It also helps in a team work, when you have a shared folder between users, they don't need to constantly update script/plugin, they will have the latest version of tool made by someone.
+# upd. This tool is going to be removed from easyPlugin soon. After some period of works it was decided to make it as a separate plugin named the same way - Kolba. This plugin is ready for installation from QGIS modules menu.
+* ### Plugin link: https://plugins.qgis.org/plugins/kolba/
+* ### Updated docs: https://github.com/pavelpereverzev/kolba/blob/main/README.ru.md
+  
+
+This tool is made for testing Python script files. User should specify a direct path to directory with Python files. Then window will show a list of Python files while you user is able to edit them in some external code editor. So when user double-click a script in Kolba, the most up-to-date version of selected script will be launched. It also helps in a team work, when you have a shared folder between users, they don't need to constantly update script/plugin, they will have the latest version of tool made by someone.
 
 >[!NOTE]
-> Scripter tool was greeted by colleagues by its simplicity. From some moment I prefer it more than plugins with repository that should be updated manually sometimes. It is more convenient in case of issue fixes: colleagues have a same local network path to scripts and tell that some script works incorrectly. I fix the script and tell that it is ready to go. Another users don't have to have update something (plugin via repository or zip-file), they just re-run script and that's it.
+> Kolba tool was greeted by colleagues by its simplicity. From some moment I prefer it more than plugins with repository that should be updated manually sometimes. It is more convenient in case of issue fixes: colleagues have a same local network path to scripts and tell that some script works incorrectly. I fix the script and tell that it is ready to go. Another users don't have to have update something (plugin via repository or zip-file), they just re-run script and that's it.
 
-Scripts which are run from Scripter should have all needed libraries imported in order to work. Otherwise Scripter will tell that something is wrong with selected script and an error will be printed in Python console of QGIS. So, despite the fact that some libraries are imported in QGIS from startup, they should be re-imported in local script file. 
+Scripts which are run from Kolba should have all needed libraries imported in order to work. Otherwise Kolba will tell that something is wrong with selected script and an error will be printed in Python console of QGIS. So, despite the fact that some libraries are imported in QGIS from startup, they should be re-imported in local script file. 
 
 ### Quickstart
 
@@ -157,11 +162,11 @@ class TestWidget(QWidget):
 app = TestWidget()
 ```
 >[!NOTE]
-> Here `iface` and `PyQt5` elements are imported in order to make script run from Scripter.
+> Here `iface` and `PyQt5` elements are imported in order to make script run from Kolba.
 
-This code snippet can be saved as a Python script file (for example, `my_widget.py`) and put in a folder selected as a script path in Scripter. In order to update contents of script list in Scripter widget, a blue refresh button should be pressed. Finally a double click on script will execute it. Same thing can be achieved in by selecting script in a list and pressing a ▶︎ button.
+This code snippet can be saved as a Python script file (for example, `my_widget.py`) and put in a folder selected as a script path in Kolba. In order to update contents of script list in Kolba widget, a blue refresh button should be pressed. Finally a double click on script will execute it. Same thing can be achieved in by selecting script in a list and pressing a ▶︎ button.
 
-The right part of Scripter window is used to show a description of selected plugins. In order to do that, a file `descriptions.json` should be created in a folder which is selected as a script path. A content of this file should look like that:
+The right part of Kolba window is used to show a description of selected plugins. In order to do that, a file `descriptions.json` should be created in a folder which is selected as a script path. A content of this file should look like that:
 ```
 {
     "test": "A sample Python code snippet.",
