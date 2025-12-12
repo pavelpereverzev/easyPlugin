@@ -124,7 +124,7 @@ https://github.com/pavelpereverzev/easyPlugin/assets/25682040/fc04cf6a-39c8-418e
 
 # upd. This tool is going to be removed from easyPlugin soon. After some period of works it was decided to make it as a separate plugin named the same way - Kolba. This plugin is ready for installation from QGIS modules menu.
 * ### Plugin link: https://plugins.qgis.org/plugins/kolba/
-* ### Updated docs: https://github.com/pavelpereverzev/kolba/blob/main/README.ru.md
+* ### Updated docs: https://github.com/pavelpereverzev/kolba/blob/main/README.md
   
 
 This tool is made for testing Python script files. User should specify a direct path to directory with Python files. Then window will show a list of Python files while you user is able to edit them in some external code editor. So when user double-click a script in Kolba, the most up-to-date version of selected script will be launched. It also helps in a team work, when you have a shared folder between users, they don't need to constantly update script/plugin, they will have the latest version of tool made by someone.
