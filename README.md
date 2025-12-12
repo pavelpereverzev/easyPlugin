@@ -6,7 +6,7 @@ The main goal of this plugin is to make a fast and easy plugin template. With al
 Plugin contains two tools: easyPlugin itself and Kolba - a tool for testing raw Python plugin code and other scripts. 
 
 ## easyPlugin tool
-![Table loook](https://pereverzev.info/easyPlugin/img/img_ep.png)
+![Table loook](https://pereverzev.info/easyPlugin/img/img_ep_1_1_0.png)
 
 ### Quickstart guide
 easyPlugin is a single-windowed widget that allows user to create a template of a plugin with minimum steps. The result is a folder with plugin contents and zip-file itself.  
@@ -120,7 +120,7 @@ https://github.com/pavelpereverzev/easyPlugin/assets/25682040/fc04cf6a-39c8-418e
 
 
 ## Kolba
-![Table loook](https://pereverzev.info/easyPlugin/img/img_es.png)
+![Table loook](https://pereverzev.info/easyPlugin/img/img_es_1_1_0.png)
 
 # upd. This tool is going to be removed from easyPlugin soon. After some period of works it was decided to make it as a separate plugin named the same way - Kolba. This plugin is ready for installation from QGIS modules menu.
 * ### Plugin link: https://plugins.qgis.org/plugins/kolba/
