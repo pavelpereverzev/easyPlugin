@@ -118,18 +118,20 @@ Video guide provided below:
 
 https://github.com/pavelpereverzev/easyPlugin/assets/25682040/fc04cf6a-39c8-418e-8e39-8fef1cd613de
 
-
+<details><summary>⚠️ Removed since v1.2.0</summary>
+    
 ## Kolba
-![Table loook](https://pereverzev.info/easyPlugin/img/img_es_1_1_0.png)
 
-# upd. This tool is going to be removed from easyPlugin soon. After some period of works it was decided to make it as a separate plugin named the same way - Kolba. This plugin is ready for installation from QGIS modules menu.
+### Kolba was originally included as a tool inside easyPlugin, but was removed in v1.2.0. It is now available as a standalone QGIS plugin.
+
 * ### Plugin link: https://plugins.qgis.org/plugins/kolba/
 * ### Updated docs: https://github.com/pavelpereverzev/kolba/blob/main/README.md
   
+![Table loook](https://pereverzev.info/easyPlugin/img/img_es_1_1_0.png)
 
 This tool is made for testing Python script files. User should specify a direct path to directory with Python files. Then window will show a list of Python files while you user is able to edit them in some external code editor. So when user double-click a script in Kolba, the most up-to-date version of selected script will be launched. It also helps in a team work, when you have a shared folder between users, they don't need to constantly update script/plugin, they will have the latest version of tool made by someone.
 
->[!NOTE]
+
 > Kolba tool was greeted by colleagues by its simplicity. From some moment I prefer it more than plugins with repository that should be updated manually sometimes. It is more convenient in case of issue fixes: colleagues have a same local network path to scripts and tell that some script works incorrectly. I fix the script and tell that it is ready to go. Another users don't have to have update something (plugin via repository or zip-file), they just re-run script and that's it.
 
 Scripts which are run from Kolba should have all needed libraries imported in order to work. Otherwise Kolba will tell that something is wrong with selected script and an error will be printed in Python console of QGIS. So, despite the fact that some libraries are imported in QGIS from startup, they should be re-imported in local script file. 
@@ -161,7 +163,7 @@ class TestWidget(QWidget):
             print('no layers in project')
 app = TestWidget()
 ```
->[!NOTE]
+
 > Here `iface` and `PyQt5` elements are imported in order to make script run from Kolba.
 
 This code snippet can be saved as a Python script file (for example, `my_widget.py`) and put in a folder selected as a script path in Kolba. In order to update contents of script list in Kolba widget, a blue refresh button should be pressed. Finally a double click on script will execute it. Same thing can be achieved in by selecting script in a list and pressing a ▶︎ button.
@@ -181,3 +183,4 @@ Video guide provided below:
 
 https://github.com/pavelpereverzev/easyPlugin/assets/25682040/67390440-8ca9-4c46-9284-0677c74a3be9
 
+</details>
