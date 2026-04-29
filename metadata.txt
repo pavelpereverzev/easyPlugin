@@ -11,13 +11,14 @@
 [general]
 name=easyPlugin
 qgisMinimumVersion=3.0
+qgisMaximumVersion=4.99
 description=Plugin which creates a simple QGIS plugin templates ready for install, editing and testing
 about=easyPlugin is tool for beginner developers who started making plugins for QGIS.
-    Its logic based on existing plugin called PluginBuider and basically makes a zip-archive which can be installed as a plugin in QGIS. Plugin contains two tools: easyPlugin itself and Scripter - a tool for testing raw python plugin code and other scripts. 
+    Its logic based on existing plugin called PluginBuider and basically makes a zip-archive which can be installed as a plugin in QGIS.
     A detailed guide can be seen in github page or plugin website.
-version=1.0.0
+version=1.2.0
 author=Pavel Pereverzev
-email=pavelpereverzev93@gmail.com
+email=pasha004@yandex.ru
 
 # end of mandatory metadata
 
@@ -27,11 +28,11 @@ email=pavelpereverzev93@gmail.com
 changelog=
 
 # tags are comma separated with spaces allowed
-tags=plugin,template,development,wizard
+tags=plugin,module,template,development,wizard
 
-homepage=https://github.com/Kylsha/easyPlugin
-tracker=https://github.com/Kylsha/easyPlugin/issues
-repository=https://github.com/Kylsha/easyPlugin
+homepage=https://github.com/pavelpereverzev/easyPlugin
+tracker=https://github.com/pavelpereverzev/easyPlugin/issues
+repository=https://github.com/pavelpereverzev/easyPlugin
 icon=icon.png
 # experimental flag
 experimental=False
@@ -39,3 +40,4 @@ experimental=False
 # deprecated flag 
 deprecated=False
 
+supportsQt6=True
