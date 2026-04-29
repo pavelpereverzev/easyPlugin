@@ -11,6 +11,7 @@
 [general]
 name={0}
 qgisMinimumVersion=3.0
+qgisMaximumVersion=4.99
 description={1}
 about={2}
 version=1.0.0
@@ -37,3 +38,4 @@ experimental=False
 # deprecated flag 
 deprecated=False
 
+supportsQt6=True
