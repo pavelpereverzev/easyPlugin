@@ -5,7 +5,7 @@ Plugin which creates a simple QGIS plugin templates ready for install, editing a
                               -------------------
         released             : 2024-02-28
         author               : (C) 2024 by Pavel Pereverzev
-        email                : pavelpereverzev93@gmail.com
+        email                : pasha004@yandex.ru
         made in              : easyPlugin by Pavel Pereverzev
         credits to           : Gary Sherman and Alexandre Neto
  ***************************************************************************/
@@ -26,23 +26,21 @@ from datetime import datetime
 import shutil
 import zipfile
 
-from PyQt5 import QtCore
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *  
+from qgis.PyQt import QtCore
+from qgis.PyQt.QtCore import *
+from qgis.PyQt.QtGui import *
+from qgis.PyQt.QtWidgets import *  
 
 from qgis.core import *
 from qgis._gui import *
 from qgis.utils import iface
 
 import pyplugin_installer
-from .easyScripter import *
-
 
 # variables
 # plugin name validator
-rx = QRegExp("[A-Za-z_ ]*")
-validator = QRegExpValidator(rx)
+rx = QRegularExpression("[A-Za-z_ ]*")
+validator = QRegularExpressionValidator(rx)
 script_folder = os.path.dirname(os.path.realpath(__file__))
 
 # links to original data
@@ -55,6 +53,7 @@ file_icon = os.path.join(script_folder, "template_data", "icon.png")
 ptypes = {
     "Action": ["self.simple_action()", False, "icon_script.png"],
     "Widget": ["self.simple_gui()", False, "icon_widget.png"],
+    "DockWidget": ["self.simple_dockwidget()", False, "icon_dockwidget.png"],
     "Map tool": ["self.simple_map_tool()", True, "icon_maptool.png"],
     "Custom": ["self.custom_tool()", False, "icon_custom.png"],
 }
@@ -98,8 +97,8 @@ def prepare_data(
     cmd_custom = (
         "pass"
         if not plugin_custom_file
-        else """self.result = exec(open(r'{}'.encode('utf-8')).read(), {{"wrapper": self}})""".format(
-            file_new_custom
+        else """self.result = exec(open(os.path.join(self.plugin_dir, '{}')).read(), {{"wrapper": self}})""".format(
+            os.path.basename(plugin_custom_file)
         )
     )
 
@@ -185,12 +184,32 @@ def remove_docked_widgets():
             ch.close()
             ch = None
 
+class easyWindow(QMainWindow):
+    # easyPlugin wrapper (QMainWindow)
+    def __init__(self, parent=None):
+        
+        # widget settings
+        QMainWindow.__init__(self, parent=iface.mainWindow())
+        self.setWindowFlags(self.windowFlags() &~QtCore.Qt.WindowType.WindowStaysOnTopHint)
+        self.setAttribute(QtCore.Qt.WidgetAttribute.WA_DeleteOnClose)
+        self.setWindowTitle('easyPlugin by Pavel Pereverzev')
+        self.setCentralWidget(easyWidget())
+        self.resize(400, 10)
+        
+        self.show()
+
+    def showEvent(self, e):
+        wrect = self.frameGeometry()
+        screen_center = self.screen().availableGeometry().center()
+        wrect.moveCenter(screen_center)
+        self.move(wrect.topLeft())
+        
 
 class easyWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__()
         self.setWindowTitle("easyPlugin by Pavel Pereverzev")
-        self.setWindowFlags(self.windowFlags() | QtCore.Qt.WindowStaysOnTopHint)
+        self.setWindowFlags(self.windowFlags() | QtCore.Qt.WindowType.WindowStaysOnTopHint)
         self.setGeometry(700, 500, 400, 100)
 
         # attrs
@@ -204,10 +223,15 @@ class easyWidget(QWidget):
         self.class_file = None
         self.class_name = None
 
-        # layout
+        # layout and widgets
+        self.label_help = QLabel(None, self)
+        self.label_help.setOpenExternalLinks(True)
+        self.label_help.setText(
+            '''<a href="https://github.com/pavelpereverzev/easyPlugin?tab=readme-ov-file#easyplugin">Help</a>'''
+        )
         groupbox_about = QGroupBox("Main parameters")
         groupbox_misc = QGroupBox("Misc.")
-        vbox = QVBoxLayout(self)
+        self.vbox = QVBoxLayout(self)
         grid_about = QGridLayout()
         grid_about.setSpacing(10)
         grid_misc = QGridLayout()
@@ -219,21 +243,18 @@ class easyWidget(QWidget):
 
         self.l_type = QLabel("Plugin type")
         self.plugin_type = QComboBox()
-        self.plugin_type.addItems(["Action", "Widget", "Map tool", "Custom"])
+        self.plugin_type.addItems(["Action", "Widget", "DockWidget", "Map tool", "Custom"])
 
         self.l_custom = QLabel("Custom file")
         self.line_custom = QLineEdit()
         self.line_custom.setReadOnly(True)
         self.btn_custom = QPushButton(self)
-        self.btn_custom.setIcon(self.style().standardIcon(QStyle.SP_DirIcon))
+        self.btn_custom.setIcon(self.style().standardIcon(QStyle.StandardPixmap.SP_DirIcon))
         self.line_custom.setDisabled(True)
         self.btn_custom.setDisabled(True)
 
         self.l_desc = QLabel("Plugin\ndescription")
         self.line_desc = QLineEdit(self)
-
-        # self.l_about = QLabel('About')
-        # self.line_about = QLineEdit(self)
 
         self.l_author = QLabel("Author")
         self.line_author = QLineEdit(self)
@@ -248,14 +269,14 @@ class easyWidget(QWidget):
         self.line_folder = QLineEdit(self)
         self.line_folder.setReadOnly(True)
         self.btn_folder = QPushButton(self)
-        self.btn_folder.setIcon(self.style().standardIcon(QStyle.SP_DirIcon))
+        self.btn_folder.setIcon(self.style().standardIcon(QStyle.StandardPixmap.SP_DirIcon))
         self.btn_folder.setMaximumWidth(30)
 
         self.l_icon = QLabel("Icon")
         self.line_icon = QLineEdit(self)
         self.line_icon.setReadOnly(True)
         self.btn_icon = QPushButton(self)
-        self.btn_icon.setIcon(self.style().standardIcon(QStyle.SP_DirIcon))
+        self.btn_icon.setIcon(self.style().standardIcon(QStyle.StandardPixmap.SP_DirIcon))
         self.btn_icon.setMaximumWidth(30)
 
         self.btn_generate = QPushButton("Generate plugin")
@@ -297,10 +318,11 @@ class easyWidget(QWidget):
         groupbox_about.setLayout(grid_about)
         groupbox_misc.setLayout(grid_misc)
 
-        vbox.addWidget(groupbox_about)
-        vbox.addWidget(groupbox_misc)
-        vbox.addWidget(self.btn_generate)
-        self.setLayout(vbox)
+        self.vbox.addWidget(groupbox_about)
+        self.vbox.addWidget(groupbox_misc)
+        self.vbox.addWidget(self.btn_generate)
+        self.setLayout(self.vbox)
+        self.label_help.raise_()
 
         self.plugin_type.currentTextChanged.connect(self.check_plugin_type)
         self.btn_custom.clicked.connect(self.select_custom_file)
@@ -309,7 +331,14 @@ class easyWidget(QWidget):
         self.line_pname.textChanged.connect(self.check_text)
         self.btn_icon.clicked.connect(self.select_icon)
 
-        self.show()
+    
+    def resizeEvent(self, event):
+        x = self.parent().width() - self.label_help.sizeHint().width() - self.vbox.contentsMargins().right()
+        y = 0
+        self.label_help.move(x, y)
+        
+        super().resizeEvent(event)
+
 
     def check_plugin_type(self):
         ptype = self.plugin_type.currentText()
@@ -343,7 +372,7 @@ class easyWidget(QWidget):
         global_pos = self.line_pname.mapToGlobal(self.line_pname.rect().topRight())
         curr_v = self.line_pname.text()
         v = validator.validate(curr_v, 0)[0]
-        if v != QValidator.Acceptable:
+        if v != QValidator.State.Acceptable:
             QToolTip.showText(
                 global_pos,
                 "Only english characters\nand _ symbol are allowed",
@@ -364,7 +393,7 @@ class easyWidget(QWidget):
     def question_message(self, question_text):
         final_question = QMessageBox(self)
         answer = final_question.question(
-            self, "easyPlugin", question_text, final_question.Yes | final_question.No
+            self, "easyPlugin", question_text, final_question.StandardButton.Yes | final_question.StandardButton.No
         )
         return answer
 
@@ -386,8 +415,18 @@ class easyWidget(QWidget):
         self.plugin_author = self.line_author.text()
         self.plugin_mail = self.line_mail.text()
         self.plugin_site = self.line_site.text()
-        v = validator.validate(self.line_pname.text(), 0)[0] == QValidator.Acceptable
+        if self.custom_file:
+            if os.path.basename(self.custom_file).split('.')[0].lower().strip()==self.plugin_name.lower().strip():
+                self.warning_message("Custom file name should not be the same as plugin name")
+                return
+        v = validator.validate(self.line_pname.text(), 0)[0] == QValidator.State.Acceptable
         if all([v, self.save_path]):
+            if os.path.isfile(os.path.join(self.save_path, self.class_name, r"{}.py".format(self.class_name))):
+                plugin_overwrite = self.question_message(
+                    "Plugin {} already exists and will be overwritten.\nContinue?".format(self.plugin_name)
+                )
+                if plugin_overwrite == QMessageBox.StandardButton.No:
+                    return
             plugin_file = prepare_data(
                 self.save_path,
                 self.plugin_name,
@@ -404,7 +443,7 @@ class easyWidget(QWidget):
             user_answer = self.question_message(
                 "Plugin {} is good to go.\nInstall it now?".format(self.plugin_name)
             )
-            if user_answer == QMessageBox.Yes:
+            if user_answer == QMessageBox.StandardButton.Yes:
                 pyplugin_installer.instance().installFromZipFile(plugin_file)
                 self.warning_message("Plugin installed!")
             else:
@@ -442,7 +481,7 @@ class easyPlugin(object):
     def initGui(self):
         # Create the menu entries and toolbar icons inside the QGIS GUI
         icon_path = QIcon(os.path.join(self.plugin_dir, "icon.png"))
-        icon_path_scripter = QIcon(os.path.join(self.plugin_dir, "icon_scripter.png"))
+        icon_path_kolba = QIcon(os.path.join(self.plugin_dir, "icon_kolba.png"))
         self.icon_action = self.add_action(
             icon_path,
             text=self.tr("easyPlugin"),
@@ -450,14 +489,6 @@ class easyPlugin(object):
             checkable=False,
             parent=self.iface.mainWindow(),
         )
-        self.icon_action_scripter = self.add_action(
-            icon_path_scripter,
-            text=self.tr("easyScripter"),
-            callback=self.runScripter,
-            checkable=True,
-            parent=self.iface.mainWindow(),
-        )
-        self.scripterIsActive = False
         self.dockwidget = None
 
         # will be set False in run()
@@ -511,22 +542,6 @@ class easyPlugin(object):
     # MAIN ACTION FUNCTION IS HERE
     def run(self):
         # run method that performs all the real work
-        self.app = easyWidget()
+        self.app = easyWindow()
 
-    def runScripter(self):
-        if not self.scripterIsActive:
-            self.scripterIsActive = True
 
-            if self.dockwidget == None:
-                self.dockwidget = Scripter(None)
-
-            self.dockwidget.closingPlugin.connect(self.onClosePlugin)
-            self.iface.addDockWidget(Qt.RightDockWidgetArea, self.dockwidget)
-        else:
-            self.dockwidget.close()
-
-    def onClosePlugin(self):
-        self.dockwidget.closingPlugin.disconnect(self.onClosePlugin)
-        self.dockwidget = None
-        self.scripterIsActive = False
-        self.icon_action_scripter.setChecked(False)
