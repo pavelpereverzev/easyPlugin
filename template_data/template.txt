@@ -23,10 +23,10 @@
 from __future__ import absolute_import
 import os.path
 
-from PyQt5 import QtCore
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import * # only used widgets can be listed here
+from qgis.PyQt import QtCore
+from qgis.PyQt.QtCore import *
+from qgis.PyQt.QtGui import *
+from qgis.PyQt.QtWidgets import * # only used widgets can be listed here
 
 from qgis.core import *
 from qgis._gui import * 
@@ -142,7 +142,14 @@ class {5}(object):
 
     def simple_gui(self):
         # run a widget with some actions
-        self.app = SimpleGui()
+        self.app = MainWindow()
+
+
+    def simple_dockwidget(self):
+        # run a widget as a dockwidget
+        self.app = DockWidget() 
+        self.app.setFloating(False)
+        self.iface.addDockWidget(Qt.DockWidgetArea.LeftDockWidgetArea, self.app)
 
 
     def simple_map_tool(self):
@@ -166,7 +173,4 @@ class {5}(object):
     def run(self):
         # run method that performs all the real work
         {7}
-    
-
-
     
